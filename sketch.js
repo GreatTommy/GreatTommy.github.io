@@ -17,7 +17,7 @@ let murailles = [];
 let compteur = 0;
 let compteur2 = 0;
 let decalageInvader = 6;
-let alterneur = 0;
+let alterneur = -1;
 
 function preload() {
   invader1 = loadImage('invader1.png');
@@ -85,6 +85,7 @@ function deplacerInvaders() {
   if (compteur == 0) {
     for (let elt of invaders) {
       elt.deplacerX();
+      alterneur = alterneur * -1;
     }
     compteur++;
     if (compteur2 < 16) {
@@ -176,13 +177,11 @@ class invader {
   }
   afficher() {
     if (!this.mort) {
-      if (alterneur == 0) {
+      if (alterneur == -1) {
         image(invader1, this.x, this.y);
-        alterneur++;
       }
       else {
         image(invader2, this.x, this.y);
-        alterneur--;
       }
     }
   }
