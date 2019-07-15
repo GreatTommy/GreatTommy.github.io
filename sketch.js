@@ -20,6 +20,7 @@ let decalageInvader = 6;
 let alterneur = -1;
 
 function preload() {
+  poup = loadSound('assets/poup.mp3');
   invader1 = loadImage('invader1.png');
   invader2 = loadImage('invader2.png');
 }
@@ -85,9 +86,9 @@ function deplacerInvaders() {
   if (compteur == 0) {
     for (let elt of invaders) {
       elt.deplacerX();
-      alterneur = alterneur * -1;
     }
     compteur++;
+    alterneur = alterneur * -1;
     if (compteur2 < 16) {
       compteur2++
     } else {
@@ -103,6 +104,7 @@ function deplacerInvaders() {
   if (compteur == decalage) {
     compteur = 0;
   }
+  poup.play();
 }
 
 function keyPressed() {
