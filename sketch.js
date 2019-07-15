@@ -20,7 +20,7 @@ let decalageInvader = 6;
 let alterneur = -1;
 
 function preload() {
-  poup = loadSound('assets/poup.mp3');
+  poup = loadSound('poup.mp3');
   invader1 = loadImage('invader1.png');
   invader2 = loadImage('invader2.png');
 }
