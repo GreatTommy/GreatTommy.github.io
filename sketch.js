@@ -88,7 +88,8 @@ function deplacerInvaders() {
       elt.deplacerX();
     }
     compteur++;
-    alterneur = alterneur * -1;
+    alterneur *= -1;
+    poup.play();
     if (compteur2 < 16) {
       compteur2++
     } else {
@@ -97,6 +98,7 @@ function deplacerInvaders() {
         elt.deplacerY();
       }
       decalageInvader *= -1;
+      poup.play();
     }
   } else if (compteur < decalage) {
     compteur++;
@@ -104,7 +106,6 @@ function deplacerInvaders() {
   if (compteur == decalage) {
     compteur = 0;
   }
-  poup.play();
 }
 
 function keyPressed() {
