@@ -211,7 +211,17 @@ class muraille {
     this.detruit = false;
   }
   afficher() {
-    stroke(100);
-    rect(this.x, this.y, 8, 8);
+    if (!this.detruit) {
+      stroke(100);
+      rect(this.x, this.y, 8, 8);
+    }
+  }
+  verifHit(x, y) {
+    if (!this.detruit) {
+      if (this.x - 1 <= x && x <= this.x + 7 && this.y <= y && y <= this.y + 8) {
+        this.detruit = true;
+        tirs.pop();
+      }
+    }
   }
 }
