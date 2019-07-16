@@ -1,8 +1,8 @@
 const width = 600;
-const height = 400;
+const height = 500;
 const pas = 7;
 const pasInvader = 2;
-const tailleVaisseau = 20;
+const tailleVaisseau = 14;
 const largeurTir = 5;
 const hauteurTir = 5;
 const decalage = 30;
@@ -40,6 +40,14 @@ function draw() {
   stroke(0);
   text("FPS: " + fps.toFixed(2), 10, height - 10);
 
+  if (tirs.length > 0) {
+    let tempX = tirs[0].x;
+    let tempY = tirs[0].y;
+    for (let elt of murailles) {
+      elt.verifHit(tempX, tempY);
+    }
+  }
+
   for (let elt of murailles) {
     elt.afficher();
   }
@@ -65,7 +73,7 @@ function draw() {
 }
 
 function construireMuraille() {
-  let i = 300;
+  let i = 400;
   let j = 64;
   let c = 0;
 
@@ -89,7 +97,7 @@ function deplacerInvaders() {
     }
     compteur++;
     alterneur *= -1;
-    //poup.play();
+    poup.play();
     if (compteur2 < 16) {
       compteur2++
     } else {
@@ -147,7 +155,10 @@ class vaisseau {
   }
   afficher() {
     let x = this.x;
-    rect(x - this.taille / 2, height - this.taille, this.taille, this.taille);
+    fill(255);
+    noStroke();
+    rect(x - this.taille / 2 - this.taille, height - this.taille, this.taille * 3, this.taille);
+    rect(x - 5, height - this.taille - 10, 10, 10);
   }
   deplacer() {
     if (keyIsDown(LEFT_ARROW) && starship0.x > 0 + this.taille) {
@@ -164,10 +175,11 @@ class tir {
     this.y = height - tailleVaisseau - hauteurTir;
   }
   afficher() {
+    fill(255);
     rect(this.x, this.y, largeurTir, hauteurTir);
   }
   deplacer() {
-    this.y -= 10;
+    this.y -= 8;
   }
 }
 
@@ -208,19 +220,32 @@ class muraille {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.detruit = false;
+    this.endommage = false;
+    this.detrut = false;
   }
   afficher() {
     if (!this.detruit) {
-      stroke(100);
+      //stroke(100);
+      if (this.endommage) {
+        fill(127);
+      }
+      else {
+        fill(255);
+      }
       rect(this.x, this.y, 8, 8);
     }
   }
   verifHit(x, y) {
     if (!this.detruit) {
-      if (this.x - 1 <= x && x <= this.x + 7 && this.y <= y && y <= this.y + 8) {
-        this.detruit = true;
-        tirs.pop();
+      if (this.x - 4 <= x && x <= this.x + 7 && this.y <= y && y <= this.y + 8) {
+        if (this.endommage == false) {
+          this.endommage = true;
+          tirs.pop();
+        }
+        else {
+          this.detruit = true;
+          tirs.pop();
+        }
       }
     }
   }
