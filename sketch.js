@@ -20,12 +20,12 @@ function preload() {
   imgRisitas = loadImage('risitas.png');
   imgChance = loadImage('pas_chance.png');
   imgSmile = loadImage('smile.png');
+  imgPerdu = loadImage('perdu.png');
 }
 
 function setup() {
   createCanvas(width, height);
   progressionNuages = random(10, 90);
-  couleur = [random(0, 155), random(0, 155), random(0, 155)];
   ellipseMode(CENTER);
   rectMode(CORNER);
   risitas = new Risitas;
@@ -35,6 +35,9 @@ function setup() {
 function draw() {
   if (!perdu) {
     afficherPaysage();
+    textSize(32);
+    fill(0);
+    text("Score : " + score, 10, 30);
     genererNuages();
     genererImmeubles();
     genererObjets();
@@ -55,6 +58,12 @@ function draw() {
     risitas.afficher();
     deplacerPaysage();
     purge();
+  }
+  else {
+    background(imgPerdu);
+    textSize(32);
+    fill(255);
+    text(score, 100, 150);
   }
 }
 
@@ -134,7 +143,7 @@ function purge() {
     }
   }
 
-  if (smiles.length > 0) {
+  if (smiles.length > 1) {
     continuer = true;
     while (continuer) {
       if (smiles[0].x < -70) {
@@ -145,7 +154,7 @@ function purge() {
     }
   }
 
-  if (chances.length > 0) {
+  if (chances.length > 1) {
     continuer = true;
     while (continuer) {
       if (chances[0].x < -70) {
@@ -172,8 +181,8 @@ class Immeuble {
     this.hauteur = hauteur;
   }
   afficher() {
-    fill(couleur[0], couleur[1], couleur[2]);
-    stroke(0);
+    fill(30);
+    stroke(30);
     rect(this.x, this.y, this.largeur, -this.hauteur);
   }
   deplacer() {
